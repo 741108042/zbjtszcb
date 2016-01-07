@@ -77,25 +77,29 @@ class ImageController extends Controller
         $title=$file->getClientOriginalName();
         $size=$file->getClientSize();
         $filename=md5($title.$size.time()).".".$file->guessExtension();
+        $filename_thumbnail=md5($title.$size.time())."_small.".$file->guessExtension();
+        
+        $target=$this->getUploadRootDir();
+        $target_url=$this->getUploadDir();
 
-        $file->move("/project/zjnews/web/upload/",$filename);
+        $file->move($target,$filename);
         if($thumbnail){
             $twidth=intval($thumbnail['width']);
             $theight=intval($thumbnail['height']);
             try{
-                $image = new \Imagick("/project/zjnews/web/upload/".$filename);  
+                $image = new \Imagick($target."/".$filename);  
                 $image->thumbnailImage($twidth,$theight); 
-                $image->writeImage("/project/zjnews/web/upload/small/".$filename);
+                $image->writeImage($target."/".$filename_thumbnail);
             }catch(Exception $e){
 
             }
         }
-        $fileinfo=getimagesize("/project/zjnews/web/upload/".$filename);
+        $fileinfo=getimagesize($target."/".$filename);
 
         $width=$fileinfo[0];
         $height=$fileinfo[1];
         $entity = new Image();
-        $entity->setImage('/upload/'.$filename);
+        $entity->setImage($target_url."/".$filename);
         $entity->setType($ext);
         $entity->setTitle($title);
         $entity->setWidth($width);
@@ -107,7 +111,7 @@ class ImageController extends Controller
             $em->flush();
             $result['id']=$entity->getId();
 
-        $result['url']='/upload/'.$filename;
+        $result['url']=$target_url."/".$filename;
         return new Response($result['id'],Response::HTTP_OK,array('Content-type'=>'application/text'));
     }
     /**
@@ -316,5 +320,27 @@ class ImageController extends Controller
             ->add('submit', 'submit', array('label' => 'Delete'))
             ->getForm()
         ;
+    }
+    /**
+    *  getrootDir
+    */
+    private function getRootDir(){
+        return __DIR__.'/../../../web';
+    }
+    private function getUploadRootDir()
+    {
+        $uploaddir=$this->getRootDir().$this->getUploadDir();
+        if(!file_exists($uploaddir)){
+            @mkdir($uploaddir,0777,true);
+        }
+        // the absolute directory path where uploaded
+        // documents should be saved
+        return $this->getRootDir().$this->getUploadDir();
+    }
+    private function getUploadDir()
+    { 
+        $now=time();
+        $subfold=date("Y",$now)."/".date("Ymd",$now);
+        return '/upload/images/'.$subfold;
     }
 }

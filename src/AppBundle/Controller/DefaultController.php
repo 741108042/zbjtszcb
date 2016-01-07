@@ -33,6 +33,7 @@ class DefaultController extends Controller
     * @Route("/")
     */
     public function adminAction(){
+
         $securityContext=$this->container->get('security.context');
         if(!$securityContext->isGranted('ROLE_ADMIN')){
             throw new AccessDeniedException('Only an admin can do this!!!!');

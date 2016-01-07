@@ -251,9 +251,10 @@ class Topic
      */
     public function preUpload()
     {             
+        $target_url=$this->getUploadDir();
         $this->filename=time();
         if (null !== $this->getCoverfile()) {
-            $this->cover = '/upload/'.$this->filename.'.'.$this->getCoverfile()->guessExtension();
+            $this->cover = $target_url.'/'.$this->filename.'.'.$this->getCoverfile()->guessExtension();
         } 
     }
  
@@ -266,8 +267,31 @@ class Topic
         if (null === $this->getCoverfile()) {
             return;
         } 
-        $this->getCoverfile()->move('/project/zjnews/web/upload/',$this->filename.'.'.$this->getCoverfile()->guessExtension());
+        $target=$this->getUploadRootDir();
+        $this->getCoverfile()->move($target,$this->filename.'.'.$this->getCoverfile()->guessExtension());
  
         $this->setCoverfile(null);
+    }
+    /**
+    *  getrootDir
+    */
+    private function getRootDir(){
+        return __DIR__.'/../../../web';
+    }
+    private function getUploadRootDir()
+    {
+        $uploaddir=$this->getRootDir().$this->getUploadDir();
+        if(!file_exists($uploaddir)){
+            @mkdir($uploaddir,0777,true);
+        }
+        // the absolute directory path where uploaded
+        // documents should be saved
+        return $this->getRootDir().$this->getUploadDir();
+    }
+    private function getUploadDir()
+    { 
+        $now=time();
+        $subfold=date("Y",$now)."/".date("Ymd",$now);
+        return '/upload/images/'.$subfold;
     }
 }

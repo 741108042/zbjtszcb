@@ -100,7 +100,7 @@
                 {% if img_entities[entity.id] %}
                 <tr><td  style="border-top:0;"></td><td colspan=7 style="border-top:0;">
                     {% for pic in img_entities[entity.id] %}
-                     <img width="100" src="{{ pic.image|replace({'upload':'upload/small'}) }}" alt="Image 4">
+                     <img width="100" src="{{ pic.image|replace({'.':'_small.'}) }}" alt="Image 4">
 
                     {%  endfor %}
                 </td></tr>
