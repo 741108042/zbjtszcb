@@ -1,0 +1,169 @@
+{% extends '::base.html.twig' %}
+
+{% block body -%}
+<div id="main-container" class="main-container">
+ <div class="main-content">
+    <div class="breadcrumbs">
+             <ul class="breadcrumb">
+                        <li>
+                            <i class="ace-icon fa fa-home home-icon"></i>
+                            <a href="#">影片库</a>
+                        </li>
+                    <li class="active">
+                            
+                             Dashboard 
+                        </li></ul>
+
+        <!-- breadcrumbs goes here -->
+    </div>
+    <div class="page-content">
+<div class="page-header">
+    <h1>
+        Form Elements
+        <small>
+            <i class="ace-icon fa fa-angle-double-right"></i>
+{{ entity.title }}        </small>
+    </h1>
+</div>
+        <!-- setting box goes here if needed -->
+        <div class="row">
+            <div class="col-xs-12">
+    <table class="record_properties">
+        <tbody>
+            <tr>
+                <th>Type</th>
+                <td>{{ entity.type }}</td>
+            </tr>
+            <tr>
+                <th>Title</th>
+                <td>{{ entity.title }}</td>
+            </tr>
+            <tr>
+                <th>Keywords</th>
+                <td>{{ entity.keywords }}</td>
+            </tr>
+            <tr>
+                <th>Length</th>
+                <td>{{ entity.length }}</td>
+            </tr>
+            <tr>
+                <th>Englishtitle</th>
+                <td>{{ entity.englishtitle }}</td>
+            </tr>
+            <tr>
+                <th>Cover</th>
+                <td>{{ entity.cover }}</td>
+            </tr>
+            <tr>
+                <th>Cdncover</th>
+                <td>{{ entity.cdnCover }}</td>
+            </tr>
+            <tr>
+                <th>Tags</th>
+                <td>{{ entity.tags }}</td>
+            </tr>
+            <tr>
+                <th>Pubdate</th>
+                <td>{{ entity.pubdate }}</td>
+            </tr>
+            <tr>
+                <th>Firstpubdate</th>
+                <td>{{ entity.firstpubdate }}</td>
+            </tr>
+            <tr>
+                <th>Kind</th>
+                <td>{{ entity.kind }}</td>
+            </tr>
+            <tr>
+                <th>Language</th>
+                <td>{{ entity.language }}</td>
+            </tr>
+            <tr>
+                <th>Country</th>
+                <td>{{ entity.country }}</td>
+            </tr>
+            <tr>
+                <th>Director</th>
+                <td>{{ entity.director }}</td>
+            </tr>
+            <tr>
+                <th>Writer</th>
+                <td>{{ entity.writer }}</td>
+            </tr>
+            <tr>
+                <th>Actor</th>
+                <td>{{ entity.actor }}</td>
+            </tr>
+            <tr>
+                <th>Intro</th>
+                <td>{{ entity.intro }}</td>
+            </tr>
+            <tr>
+                <th>Score</th>
+                <td>{{ entity.score }}</td>
+            </tr>
+            <tr>
+                <th>Hits</th>
+                <td>{{ entity.hits }}</td>
+            </tr>
+            <tr>
+                <th>Imdb</th>
+                <td>{{ entity.imdb }}</td>
+            </tr>
+            <tr>
+                <th>Created</th>
+                <td>{{ entity.created }}</td>
+            </tr>
+            <tr>
+                <th>Updated</th>
+                <td>{{ entity.updated }}</td>
+            </tr>
+            <tr>
+                <th>Status</th>
+                <td>{{ entity.status }}</td>
+            </tr>
+            <tr>
+                <th>Coming</th>
+                <td>{{ entity.coming }}</td>
+            </tr>
+            <tr>
+                <th>Playing</th>
+                <td>{{ entity.playing }}</td>
+            </tr>
+            <tr>
+                <th>Hot</th>
+                <td>{{ entity.hot }}</td>
+            </tr>
+            <tr>
+                <th>Crapimg</th>
+                <td>{{ entity.crapimg }}</td>
+            </tr>
+            <tr>
+                <th>Scheduled</th>
+                <td>{{ entity.scheduled }}</td>
+            </tr>
+            <tr>
+                <th>Nodeid</th>
+                <td>{{ entity.nodeId }}</td>
+            </tr>
+        </tbody>
+    </table>
+       </div>
+        </div>
+    </div>
+</div>
+</div>
+        <ul class="record_actions">
+    <li>
+        <a href="{{ path('m') }}">
+            Back to the list
+        </a>
+    </li>
+    <li>
+        <a href="{{ path('m_edit', { 'id': entity.nodeId }) }}">
+            Edit
+        </a>
+    </li>
+    <li>{{ form(delete_form) }}</li>
+</ul>
+{% endblock %}

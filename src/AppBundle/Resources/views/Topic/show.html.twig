@@ -1,0 +1,173 @@
+{% extends '::base.html.twig' %}
+
+{% block body -%}
+<div id="main-container" class="main-container">
+ <div class="main-content">
+    <div class="breadcrumbs">
+             <ul class="breadcrumb">
+                        <li>
+                            <i class="ace-icon fa fa-home home-icon"></i>
+                            <a href="#">直播</a>
+                        </li>
+                    <li class="active">
+                            
+                             Dashboard 
+                        </li></ul>
+
+        <!-- breadcrumbs goes here -->
+    </div>
+    <div class="page-content">
+    <div class="page-header">
+        <h1>
+            {{ entity.title }}
+            <small>
+                <i class="ace-icon fa fa-angle-double-right"></i>
+            </small>
+        </h1>
+    </div>
+
+<!---->
+    <div class="row">
+        <div class="col-xs-12 col-sm-3 center">
+            <span class="profile-picture">
+                <img src="{{ entity.cover }}" id="avatar2" alt="Alex's Avatar" class="editable img-responsive">
+            </span>
+
+            <div class="space space-4"></div>
+            
+ 
+
+        </div><!-- /.col -->
+
+        <div class="col-xs-12 col-sm-9">
+            <h4 class="blue">
+                <span class="middle">{{ entity.title }}</span>
+ 
+            </h4>
+
+            <div class="profile-user-info">
+                <div class="profile-info-row">
+                    <div class="profile-info-name"> 作者 </div>
+
+                    <div class="profile-info-value">
+                        <span>{{ entity.author }}</span>
+                    </div>
+                </div>
+   
+                <div class="profile-info-row">
+                    <div class="profile-info-name"> 创建时间 </div>
+
+                    <div class="profile-info-value">
+                        <span>{{ entity.created|date("m/d/Y") }}</span>
+                    </div>
+                </div>
+ 
+            </div>
+
+            <div class="hr hr-8 dotted"></div>
+
+        </div><!-- /.col -->
+    </div> 
+
+    <div class="row">
+        <div class="col-xs-12 col-sm-6">
+            <div class="widget-box transparent">
+                <div class="widget-header widget-header-small">
+                    <h4 class="widget-title smaller">
+                        <i class="ace-icon fa fa-check-square-o bigger-110"></i>
+                        视频
+                    </h4>
+                </div>
+
+                <div class="widget-body">
+                    <div class="widget-main">
+                        {{entity.video}}
+                    </div>
+                </div>
+            </div>
+        </div>
+
+     </div>
+ <div class="row">
+        <div class="col-xs-12 col-sm-6">
+            <div class="widget-box transparent">
+                <div class="widget-header widget-header-small">
+                    <h4 class="widget-title smaller">
+                        <i class="ace-icon fa fa-check-square-o bigger-110"></i>
+                        直播内容
+                    </h4>
+                </div>
+
+                <div class="widget-body">
+                    <div class="widget-main">
+                        <div class="timeline-container timeline-style2">
+                            <span class="timeline-label">
+                                <b>Yesterday</b>
+                            </span>
+                            <div class="timeline-items">
+                        {% for item in pagination %}
+                        <div class="timeline-item clearfix">
+                            <div class="timeline-info">
+                                <span class="timeline-date">{{item.created|date("H:i")}}</span>
+
+                                <i class="timeline-indicator btn btn-success no-hover"></i>
+                            </div>
+
+                            <div class="widget-box transparent">
+                                <div class="widget-body">
+                                    <div class="widget-main no-padding">
+                                        <div class="clearfix">
+                                            <div class="pull-left">
+                                                <span class="orange2 bolder">{{item.title}}</span>
+                                                <br>
+                                                    {{item.intro}}
+                                            </div>
+
+                                            <div class="pull-right">
+                                                <i class="ace-icon fa fa-chevron-left blue bigger-110"></i>
+                                                &nbsp;
+                                                {% if img_entities[item.id] %}
+                                                {% for pic in img_entities[item.id] %}
+                                                 <img width="36" src="{{pic.image}}" alt="Image 4">
+
+                                                {%  endfor %}
+                                                {% endif %} 
+                                                &nbsp;
+                                                <i class="ace-icon fa fa-chevron-right blue bigger-110"></i>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        {% endfor %}
+                            </div>
+                                                            {{ knp_pagination_render(pagination) }}            
+
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+     </div>
+
+
+</div>
+</div>
+</div>
+
+        <ul class="record_actions">
+    <li>
+        <a href="{{ path('topic') }}">
+            Back to the list
+        </a>
+    </li>
+    <li>
+        <a href="{{ path('topic_edit', { 'id': entity.id }) }}">
+            Edit
+        </a>
+    </li>
+    <li>{{ form(delete_form) }}</li>
+</ul>
+{% endblock %}

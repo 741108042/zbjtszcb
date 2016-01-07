@@ -1,0 +1,552 @@
+<!DOCTYPE HTML>
+
+<html>
+<head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, minimum-scale=1, user-scalable=no" />
+    <meta name="format-detection" content="telephone=no" />
+    <link rel="icon" href="http://www.zheis.me/zhebao/_resources/logo.ico" />
+    <link type="text/css" rel="stylesheet" href="http://www.zheis.me/zhebao/_resources/news/css/index.css" />
+    <script type="text/javascript" src="http://www.zheis.me/zhebao/_resources/js/jquery-1.11.1.min.js"></script>
+    <link type="text/css" rel="stylesheet" href="http://www.zheis.me/zhebao/_resources/lightbox/css/layer.css" />
+    <script src="http://www.zheis.me/zhebao/_resources/lightbox/layer.js"></script>
+<!--     <script src="http://res.wx.qq.com/open/js/jweixin-1.0.0.js"></script> -->
+<!-- Core CSS file -->
+        <link type="text/css" rel="stylesheet" href="http://www.zheis.me/zhebao/_resources/js/dist/photoswipe.css" />
+ 
+
+<!-- Skin CSS file (styling of UI - buttons, caption, etc.)
+     In the folder of skin CSS file there are also:
+     - .png and .svg icons sprite, 
+     - preloader.gif (for browsers that do not support CSS animations) -->
+      <link type="text/css" rel="stylesheet" href="http://www.zheis.me/zhebao/_resources/js/dist/default-skin/default-skin.css" />
+ 
+
+<!-- Core JS file -->
+ <script src="http://www.zheis.me/zhebao/_resources/js/dist/photoswipe.min.js"></script>
+  
+
+<!-- UI JS file -->
+<script src="http://www.zheis.me/zhebao/_resources/js/dist/photoswipe-ui-default.min.js"></script>
+    <title id="title1">{{entity.title}}</title>
+    <style>
+.describe2 {
+    background: url("http://www.zheis.me/zhebao/_resources/news/images/logo.png") no-repeat scroll 0 0 #000;
+    color: #fff;
+    font-family: "Microsoft Yahei";
+    font-size: 20px;
+    height: 42px;
+    padding-left: 90px;
+    padding-top: 5px;
+    position: absolute;
+    top: 0;
+    width: 100% !important;
+}
+
+.describe{
+font-size:16px;
+width:170px;
+right:0px;
+text-align:left;
+color:#fff;
+display:none;
+}/*
+.live{display:none;}
+*/
+.infoFont{font-size:1.4em; line-height:28px;color:#4b4b4b;}
+.timeWrap{height:auto;line-height:28px;}
+.timeC{font-size:1.4em;color:#000000;font-weight:bold;position:relative;width:80%}
+.timeL{height:28px;width:50px;font-size:18px;padding-top:2px;}
+    .head_video{position:fixed;z-index:999;width:100%;height:240px;background-color:black;}
+    .main_video{position:absolute;margin-top:240px;}
+    .box11{width:95%;height:auto;}
+    .box13{width:95%;height:auto;}
+    .box12{width:95%;height:auto;}
+    .box13{width:95%;height:auto;}
+    .box{width:95%;height:auto;}
+    .mainmenu li{float:none;margin-left:0}
+    .main{background:#ffffff;}
+    /*.whiteTime{background-color:#3e3e3e;color:#ffffff;}
+    .head{max-height:100px;}*/
+    .round{
+        padding:2px;width:80px; 
+        background:#949494;
+        color:#fff;
+        font-size:16px;
+        -moz-border-radius:10px;
+        -webkit-border-radius:10px;
+        border-radius:10px;
+        text-align:center;
+    }
+    .live{width:auto;top:35px;display:none;}
+    </style>
+</head>
+<body>
+        <div id="showImg" style="display: none;" onclick="close()">
+         <img src="http://www.zheis.me/zhebao/_resources/logo.png" />
+        </div>
+    <div class="head">
+        <img id="imgUrl" style="width:100%;max-height:100px;" src="{{entity.cover}}" />
+        <div class="state">
+            <img src="http://www.zheis.me/zhebao/_resources/news/images/btn-13.png" id="state" width="100%" />
+        </div>
+        <div class="live">
+            <img height="40" src="http://www.zheis.me/zhebao/_resources/news/images/live.png" />
+        </div>
+        <div class="describe" id="title">{{entity.title}}</div>
+    </div>
+    <div class="main">
+        <!--<div class="chat">
+            <div class="chatL">
+                <img th:src="@{/_resources/news/images/zhibob.png}" width="100%"/>
+                <img th:src="@{/_resources/news/images/qipao.png}" width="100%" class="qipao" id="qobao1" style="display:none"/>
+            </div>
+            <div class="chatR">
+                <img th:src="@{/_resources/news/images/liaotiana.png}" onclick = "chatting()" width="100%"/>
+                <img th:src="@{/_resources/news/images/qipao.png}" width="100%" class="qipao2" id="qipao2" style="display:none"/>
+            </div>
+        </div>
+        <div><hr class="redline"/></div>
+-->
+        <div class="content_head" id="loading" style="display:none;">
+               <p class="pic">
+                    <img width="100%" src="http://www.zheis.me/zhebao/_resources/news/images/btn-loading.png" />
+                </p> 
+                <p class="load">加载中...</p>
+            </div>
+        <div class="time" id="pagedata">
+        </div>
+    </div>
+    <script src="http://www.zheis.me/zhebao/_resources/js/lazyload/lazyload.js"></script>
+    <script type="text/javascript">
+    /*<![CDATA[*/
+    $(function(){
+        //picUrl();
+        showMore();
+        lazyload.setcfg({
+              loadfunc : "showMore"//加载数据的方法名
+        });
+        $("#showImg").click(function(){
+            layer.closeAll()
+        })
+    });  
+    function chatting(){
+        window.location = '/zhebao/news/chatting/'+'67'+"/"+'2';
+    }
+    var page = 1;
+    function showMore(){
+        $("#loading").show();
+        $.ajax({
+            url: '{{path("topic_ajax_show")}}',
+            cache: false,
+            data : {
+                "id" : '{{entity.id}}',
+                "page" : page+""
+            },
+            type:'POST',
+            dataType:'json',
+            success : function(rel) {
+                if (rel.page == page+"") {
+                    page++;
+                } else {
+                    $("#loading").hide();
+                    return;
+                }
+                appendHtml(rel);
+            }
+        });
+    };
+    function video(obj){
+        window.location = $(obj).attr("value");
+    }
+    function winPop(obj){
+        layer.open({
+            type: 1,
+            title: false,
+            closeBtn: false,
+            area: 'auto',
+            skin: 'white', //没有背景色
+            shadeClose: true,
+            shade:['black'],
+            content: $("#showImg")
+        });
+        var ss = $(obj).attr("value");
+        $("#showImg img").attr("src",ss);
+        
+    }
+   /* function picUrl(){
+        $.ajax({
+                url : '/zhebao/news/getzhibo',
+                cache : false,
+                data : {
+                    "id" : '67'
+                }, 
+                type : 'POST',
+                dataType:'json',
+                success : function(str) {
+                    $('#title1').text(str.title);
+                    $('#title').text(str.title);
+                        $('#imgUrl').attr("src",str.picUrl.replace('61.164.57.60:5080','www.zheis.me:8081'));
+                    if(str.state=="0"){
+                        $('#state').attr("src",'/zhebao/_resources/news/images/btn-13.png');
+                    }else if(str.state=="1"){
+                        $('#state').attr("src",'/zhebao/_resources/news/images/btn-11.png');
+                    }else{
+                        $('#state').attr("src",'/zhebao/_resources/news/images/btn-13.png');
+                    }
+                    if(str.addstate=="1"){
+                        $("#qipao1").show();
+                    }else if(str.addstate=="2"){
+                        $("#qipao2").show();
+                    }else if(str.addstate=="3"){
+                        $("#qipao1").show();
+                        $("#qipao2").show();
+                    }else{
+                        return;
+                    }
+            }
+        });
+    };*/
+    /*===============添加信息=====================*/
+    function appendHtml(map) {
+      var html = "";
+var pre=0;
+      var products = map['data'];
+      var typeId = map['type'];
+      var times= new Date();
+    var today_y=parseInt(times.getFullYear());
+    var today_m=parseInt(times.getMonth()+1);
+    var today_d=parseInt(times.getDate());
+    if(today_m<10){today_m="0"+(times.getMonth()+1);}
+    if(today_d<10){today_d="0"+(times.getDate());}
+      var ts = today_y+"-"+today_m+"-"+today_d;
+      if(typeId==0){
+          for (var i = 0; i < products.length; i++) {
+                var imgs = "";
+                var addtime = products[i].addtime;
+                var title = products[i].title;
+                var content = products[i].content;
+                    content=content.replace(/&lt;/g,"<");
+                    content=content.replace(/&gt;/g,">");
+                    //console.log(content);
+                var source = products[i].source;
+                var editor = products[i].editor;
+        var istop=parseInt(products[i].isTop);
+                if(addtime==undefined ||addtime==null){
+                    addtime="";
+                }
+                if(title==undefined ||title==null){
+                    title="";
+                }
+                if(content==undefined ||content==null){
+                    content="";
+                }
+                if(source==undefined ||source==null){
+                    source="";
+                }
+                if(editor==undefined ||editor==null){
+                    editor="";
+                }
+                if(products[i].pics.length>0){
+                    if(products[i].pics.length>4 && products[i].pics.length<7){
+                        var pp="";
+                      for(var y=0;y<products[i].pics.length;y++){
+                            var curpic=products[i].pics[y];
+                          var ppsrc=curpic.src;
+                            var ppsize=curpic.size;
+                         var orgfile=ppsrc;
+                         // var ppsize=products[i].pics[y].size;
+                          var nn = "<li style='max-height:200px' ><a value="+orgfile+"  class='lightbox' data-size='"+ppsize+"' ><img src="+ppsrc+
+                          " width='100%' ind="+y+" /></a></li>";
+                        pp+=nn;
+                      }   
+                       if(source){source="据"+source;}
+                     imgs= "<div class='box13'><ul class='mainmenu'>"+pp+"</ul></div><div><a class='laiyuan'>"+source+"</a></div>";
+                    }else if(products[i].pics.length>7){
+                      var pp="";
+                      for(var y=0;y<products[i].pics.length;y++){
+                          var curpic=products[i].pics[y];
+                          var ppsrc=curpic.src;
+                            var ppsize=curpic.size;
+                         var orgfile=ppsrc;
+                          var nn = "<li style='max-height:200px' ><a value="+orgfile+"  class='lightbox' data-size='"+ppsize+"'  ><img src="+ppsrc+
+                          " width='100%' ind="+y+" /></a></li>";
+                        pp+=nn;
+                      }   
+                       if(source){source="据"+source;}
+                     imgs= "<div class='box'><ul class='mainmenu'>"+pp+"</ul></div><div><a class='laiyuan'>"+source+"</a></div>";
+                    }else if(products[i].pics.length==3){
+                      var pp="";
+                      for(var y=0;y<products[i].pics.length;y++){
+                          var curpic=products[i].pics[y];
+                          var ppsrc=curpic.src;
+                            var ppsize=curpic.size;
+                         var orgfile=ppsrc;
+                          var nn = "<li style='max-height:200px;' ><a value="+orgfile+"  class='lightbox' data-size='"+ppsize+"' ><img src="+ppsrc+
+                          " width='100%'  ind="+y+" /></a></li>";
+                        pp+=nn;
+                      }   
+                       if(source){source="据"+source;}
+                     imgs= "<div class='box12'><ul class='mainmenu'>"+pp+"</ul></div><div><a class='laiyuan'>"+source+"</a></div>";
+                  }else if(products[i].pics.length==2){
+                      var pp="";
+                      for(var y=0;y<products[i].pics.length;y++){
+                          var curpic=products[i].pics[y];
+                          var ppsrc=curpic.src;
+                            var ppsize=curpic.size;
+                         var orgfile=ppsrc;
+                          var nn = "<li style='max-height:200px' ><a value="+orgfile+"  class='lightbox' data-size='"+ppsize+"' ><img src="+ppsrc+
+                          " width='100%'  ind="+y+" /></a></li>";
+                        pp+=nn;
+                      }   
+                       if(source){source="据"+source;}
+                     imgs= "<div class='box11'><ul class='mainmenu'>"+pp+"</ul></div><div><a class='laiyuan' >"+source+"</a></div>";
+                  }else if(products[i].pics.length==4){  
+                      var pp="";
+                      for(var y=0;y<products[i].pics.length;y++){
+                          var curpic=products[i].pics[y];
+                          var ppsrc=curpic.src;
+                            var ppsize=curpic.size;
+                         var orgfile=ppsrc;
+                          var nn = "<li style='max-height:200px' ><a value="+orgfile+"  class='lightbox' data-size='"+ppsize+"' ><img src="+ppsrc+
+                          " width='100%'  ind="+y+" /></a></li>";
+                        pp+=nn;
+                      }
+                      if(source){source="据"+source;}
+                        imgs= "<div class='box'><ul class='mainmenu'>"+pp+"</ul></div><div><a class='laiyuan' >"+source+"</a></div>";
+                  }else{
+                      var curpic=products[i].pics[0];
+                          var ppsrc=curpic.src;
+                            var ppsize=curpic.size;
+                         var orgfile=ppsrc;
+                    if(source){source="据"+source;}
+                      imgs= "<div class='box'>"+
+                     "<a value="+orgfile+"  class='lightbox' data-size='"+ppsize+"' ><img src="+ppsrc+" width='100%' ind=0 /></a>"+
+                     "</div><div><a class='laiyuan' >"+source+"</a></div>";
+                  }
+                }
+                var whiteTime ="";
+        var cur=addtime.substring(0,10);
+        
+         
+                if(cur!==pre){
+                    if(i==0&&addtime.substring(0,10)==ts){whiteTime='';}else{
+                    whiteTime="<div class='whiteTime'><table><tr><td>"+addtime.substring(0,10)+
+                    "</td></tr></table></div>";}
+                }else{whiteTime='';}
+                 
+        pre=addtime.substring(0,10);
+        var pubtime='';
+        if(istop==1){pubtime='置顶';}else{pubtime=addtime.substring(10,16);}
+                var tmp =whiteTime+"<div class='timeWrap'>"+
+                "<div class='timeL'>"+
+                    "<img src="+'http://www.zheis.me/zhebao/_resources/news/images/time.png'+" width='100%'/>"+
+                    "<span>"+pubtime+"</span>"+
+                "</div>"+
+                "<div class='timeC'><p>"+
+                title
+                +"</p></div>"+
+                "</div>"+
+                "<div class='infoFont'><p class='appp'>"+
+                content
+                +"</p></div><div class='boxWrap'>"+imgs+
+                "</div>";   
+           html += tmp;
+              }
+      }else{
+          for (var i = 0; i < products.length; i++) {
+            var addtime = products[i].addtime;
+            var name = products[i].name;
+            var content = products[i].content;
+            var contentpeople = products[i].contentpeople;
+            var contentperson = products[i].contentperson;
+            if(addtime==undefined ||addtime==null){
+                addtime="";
+            }
+            if(name==undefined ||name==null){
+                name="";
+            }
+            if(content==undefined ||content==null){
+                content="";
+            }
+            if(contentpeople==undefined ||contentpeople==null){
+                contentpeople="";
+            }
+            if(contentperson==undefined ||contentperson==null){
+                contentperson="";
+            }
+                var tmp ='<div class="timeWrap">'+
+                '<div class="timeL">'+
+                    '<img src='+'http://www.zheis.me/zhebao/_resources/news/images/time.png'+' width="100%"/>'+
+                    '<span>'+addtime.substring(10,16)+'</span>'+
+                '</div>'+
+                '<div class="timeC"><p>'+
+                name+
+                '</p></div>'+
+                '</div>'+
+                '<div class="infoFont"><p class="appp">'+
+                content+
+                '</p><div class="boxss2"><p>'+contentpeople+':</p>'+
+                '<p class="contents">'+contentperson+'</p>'+
+                '</div></div>';     
+           html += tmp;
+              }
+      }
+        $("#pagedata").append(html);
+        $("#loading").hide();
+        lazyload.register();
+        pshow();
+        $(".appp").removeClass("appp");
+    };
+    var t=0;
+    function pshow(){
+        var neirong = $(".appp");
+        for(i=0;neirong != null && i<neirong.length;i++){
+            var text = neirong[i].innerHTML;
+            var newBox = document.createElement("div");
+            var newBox1 = document.createElement("div");
+            newBox1.setAttribute("style","display:none");
+            newBox1.innerHTML = text;
+            var btn = document.createElement("a");
+            newBox.innerHTML = text.substring(0,54);
+            if(text.length>54){ 
+            btn.innerHTML = text.length > 54 ? "显示全部" : "";
+            btn.href = "###";
+            btn.setAttribute("id","a"+t+"_"+i+"b");
+            btn.setAttribute("class","round");
+            }
+            neirong[i].innerHTML = "";
+            neirong[i].appendChild(newBox);
+            neirong[i].appendChild(newBox1);
+            neirong[i].appendChild(btn);
+            $("#a"+t+"_"+i+"b").click(function(){
+                if ($(this).text() == "显示全部"){
+                    $(this).text("收起");
+                    $(this).prev().show();
+                    $(this).prev().prev().hide();
+                }else{
+                    $(this).text("显示全部");
+                    $(this).prev().prev().show();
+                    $(this).prev().hide();
+                }
+            });
+        }
+        t++;
+    }
+    /*]]>*/
+    </script>
+
+
+ 
+<!-- Root element of PhotoSwipe. Must have class pswp. -->
+<div class="pswp" tabindex="-1" role="dialog" aria-hidden="true">
+
+    <!-- Background of PhotoSwipe. 
+         It's a separate element as animating opacity is faster than rgba(). -->
+    <div class="pswp__bg"></div>
+
+    <!-- Slides wrapper with overflow:hidden. -->
+    <div class="pswp__scroll-wrap">
+
+        <!-- Container that holds slides. 
+            PhotoSwipe keeps only 3 of them in the DOM to save memory.
+            Don't modify these 3 pswp__item elements, data is added later on. -->
+        <div class="pswp__container">
+            <div class="pswp__item"></div>
+            <div class="pswp__item"></div>
+            <div class="pswp__item"></div>
+        </div>
+
+        <!-- Default (PhotoSwipeUI_Default) interface on top of sliding area. Can be changed. -->
+        <div class="pswp__ui pswp__ui--hidden">
+
+            <div class="pswp__top-bar">
+
+                <!--  Controls are self-explanatory. Order can be changed. -->
+
+                <div class="pswp__counter"></div>
+
+                <button class="pswp__button pswp__button--close" title="Close (Esc)"></button>
+
+                <button class="pswp__button pswp__button--share" title="Share"></button>
+
+                <button class="pswp__button pswp__button--fs" title="Toggle fullscreen"></button>
+
+                <button class="pswp__button pswp__button--zoom" title="Zoom in/out"></button>
+ 
+                <div class="pswp__preloader">
+                    <div class="pswp__preloader__icn">
+                      <div class="pswp__preloader__cut">
+                        <div class="pswp__preloader__donut"></div>
+                      </div>
+                    </div>
+                </div>
+            </div>
+
+            <div class="pswp__share-modal pswp__share-modal--hidden pswp__single-tap">
+                <div class="pswp__share-tooltip"></div> 
+            </div>
+
+            <button class="pswp__button pswp__button--arrow--left" title="Previous (arrow left)">
+            </button>
+
+            <button class="pswp__button pswp__button--arrow--right" title="Next (arrow right)">
+            </button>
+
+            <div class="pswp__caption">
+                <div class="pswp__caption__center"></div>
+            </div>
+
+        </div>
+
+    </div>
+
+</div>
+    
+<script>var gallery;
+function initphoto(elem,ind){gallery=null;
+   var items = [];
+    //console.log(elem);
+    elem.find('a[class=lightbox]').each(function(){
+        
+        var src=$(this).attr("value");
+        var size=$(this).attr("data-size").split('x');
+        var item={
+            src: src,
+            w: parseInt(size[0],10),
+            h: parseInt(size[1],10),
+        };
+        items.push(item);
+    });
+    
+    //console.log(items);
+var pswpElement = document.querySelectorAll('.pswp')[0];
+var options = { 
+   // index: 0 // start at first slide
+  // shareButtons:[]
+  showAnimationDuration:0,
+  hideAnimationDuration:0,
+  shareEl:false
+};
+//console.log(items);
+if(items.length>0){
+ gallery = new PhotoSwipe( pswpElement, PhotoSwipeUI_Default, items, options);
+gallery.init();console.log(ind);
+gallery.goTo(ind);
+}
+}
+$(document).click(function(e){ 
+e.preventDefault();
+var target = e.target; 
+//console.log(target.nodeName);
+if(target.nodeName=='IMG'){
+    var elem=$(target);
+    if(typeof(elem.attr('ind'))!="undefined"){
+    var ind=parseInt($(target).attr("ind"));
+    var p=$(target).parent(".lightbox").parent().parent();
+     initphoto(p,ind); }
+} 
+}); 
+</script>
+    </body>
+</html>

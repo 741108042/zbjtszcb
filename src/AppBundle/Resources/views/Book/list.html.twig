@@ -1,0 +1,291 @@
+{% extends '::frontbase.html.twig' %}
+{% block title %}
+爱阅读
+{% endblock %}
+{% block body -%}
+<script type="text/javascript" src="{{ asset('/bundles/share/iscroll.min.js') }}"></script>
+
+ <style>
+       body{/*background-color:#f5f5f5;*/}
+       .table > tbody > tr > td {border-top:0px;}
+       .shadow{ 
+ box-shadow:2px 2px 1px #848484;
+-moz-box-shadow:2px 2px 1px #848484;
+-webkit-box-shadow:2px 2px 1px #848484;
+  
+       }
+    .zjyd{}
+    .sj{background-image: url("/bundles/05.png");}
+#wrapper {
+  /*position: absolute;*/
+  z-index: 1;
+  /*top: 45px;*/
+  bottom: 48px;
+  left: 0;
+  width: 100%;
+  background: #fff;
+  overflow: hidden;
+}
+.wrapperfix{
+  position:fixed!important;
+  top:0;
+}
+#scroller {
+  /*position: absolute;*/
+  z-index: 1;
+  -webkit-tap-highlight-color: rgba(0,0,0,0);
+  width: 1000px;
+  height: 100%;
+   -webkit-transform: translateZ(0);
+  -moz-transform: translateZ(0);
+  -ms-transform: translateZ(0);
+  -o-transform: translateZ(0);
+  transform: translateZ(0);
+  -webkit-touch-callout: none;
+  -webkit-user-select: none;
+  -moz-user-select: none;
+  -ms-user-select: none;
+  user-select: none;
+  -webkit-text-size-adjust: none;
+  -moz-text-size-adjust: none;
+  -ms-text-size-adjust: none;
+  -o-text-size-adjust: none;
+  text-size-adjust: none;
+}
+
+#scroller ul {
+  list-style: none;
+  padding: 0;
+  margin: 0;
+  width: 100%;
+  height: 100%;
+  text-align: center;
+}
+
+#scroller li {
+  display: block;
+  float: left;
+  width: 100px;
+  height: 100%;
+   font-size: 18px;
+}
+.menu_active{color:#f00;font-weight: bold;} 
+.breadcrumbs {
+    background-color: #f5f5f5;
+    border-bottom: 1px solid #e5e5e5;
+    line-height: 40px;
+    min-height: 41px;
+    padding: 0 12px 0 0;
+    position: relative;
+    z-index: auto;
+}
+.breadcrumb {
+    background-color: transparent;
+    border-radius: 0;
+    color: #333;
+    display: inline-block;
+    font-size: 13px;
+    line-height: 20px;
+    margin: 6px 22px 0 12px;
+    padding: 0;
+}
+.main-content{
+padding:10px;
+}
+.breadcrumb > li {
+    display: inline-block;
+}
+.pull-right {
+    float: right;
+}
+</style>   
+
+<div id="main-container" class="main-container">       
+ <div class="breadcrumbs">
+               <ul class="breadcrumb pull-left"  >
+<li style="color:#848484;valign:middle;"><img width="17" src="{{asset('/bundles/ireader.png')}}"><span style="font-size: 11px">爱阅读提供</span></li>
+              </ul>
+
+             <ul class="breadcrumb pull-right" style="margin-right:0px;" >
+                        <li >
+                           <a href="http://s.iyd.cn/mobile/book/userLastRead?channelId=zhebaoxw&appId=readingjoywap&version=022400029"> <img src="{{ asset('/bundles/03.png') }}" width=80>  
+                           </a>
+                           <a href="http://s.iyd.cn/mobile/book/userBookShelf?channelId=zhebaoxw&appId=readingjoywap&version=022400029">
+                          <img src="{{ asset('/bundles/05.png') }}" width=80>
+                        </a>
+                        </li> </ul>
+
+        <!-- breadcrumbs goes here -->
+    </div> 
+ <div class="main-content" style="margin-bottom:10px;">
+   
+    <div class="page-content">
+        <div class="page-header" style="margin-top:10px;padding-bottom: 9px;padding-top: 0px;border-bottom:1px solid #ccc">
+                    <div class=" pull-left" style="font-size:18px;">                           
+                 最新上架                                
+                </div>
+                 <div class=" pull-right">
+                 <a class="" href="{{path('book_listmore')}}" style="color:#848484;font-size:18px;">
+                更多                    <i class="fa fa-angle-right"></i>
+                      
+                </a> 
+                </div>
+  <div style="clear:both">
+        </div>  
+        </div>
+     
+        <!-- setting box goes here if needed -->
+ 
+        <div class="row" >
+
+            <table class="table">
+            {% for entity in pagination %}
+
+            <tr><td >
+           <a href="{{entity.link}}"> <img src="{{ entity.cover }}" height=132 class='shadow'></a>    
+            </td><td>
+            <dl>
+            <dt><h4 style="color:#4b4a4a"><a href="{{entity.link}}"> {{ entity.title }}</a></h4></dt>
+            <p style="font-size:14px;color:#848484">{{ entity.author }}</p>
+            <p style="font-size:14px;color:#848484">{{ entity.intro|slice(0,30) }}</p>
+
+            </dl>
+
+            </tr>
+            {% endfor %}
+<tr><td colspan="10"><div style="width:100%;height:20px;display:block;background:#f3f3f3; "></div></td></tr>
+            </table> 
+         
+ 
+ 
+        </div> 
+     </div>
+
+</div> 
+<!---->
+ <div class="main-content" >
+    
+    <div class="page-content">
+      
+ 
+
+<div class="row" style="height:20px;">
+ 
+<div class="breadcrumbs" id="wrapper"  style="height:20px;">
+<div id="scroller"  >
+<ul id='catelist'>
+   {% set categoryid = 1 %}
+{% for item in category %}
+{% if categoryid==1 %}
+    {% set categoryid = item.id %}
+
+<li id="li_{{item.id}}" class="menu_active">{{item.category}} </li> 
+{%  else %}
+<li id="li_{{item.id}}" >{{item.category}} </li> 
+
+{% endif %}
+{% endfor %}
+</ul>
+</div>
+</div>
+</div>
+        <!-- setting box goes here if needed -->
+ 
+        <div class="row">
+
+         <table class="table" id='datalist'>
+                                        
+          </table> 
+         
+ 
+ 
+        </div>
+    </div>
+</div>
+<!---->
+
+</div>
+     
+ 
+    <script type="text/javascript"  language="javascript">
+         var page =1;
+
+      function loaddata(id){
+        var totalheight = $(window).height()+$(window).scrollTop();
+        
+        if ((($(document).height()-200) <= totalheight)||page==1){console.log(page);
+          if(page>0){
+            $(window).unbind('scroll');
+            $.get('{{path("book_listjson")}}?categoryid='+id+'&page='+parseInt(page) ,function(msg){
+              if(msg.count>0){
+                if(page==1){ $("#datalist").html('');}
+                page++;
+
+              }
+              for(i=0;i<msg.count;i++){
+                var data=msg.data[i];
+
+                 var html='<tr><td><a href="/view/'+data.id+'.html">';
+                 if(data.cover){
+                 html+='<a href="'+data.link+'"><img src="'+data.cover+'" height=132 /></a>';
+                 }
+                 html+='</td><td>';
+                 html+='<dt><h4 style="color:#4b4a4a"><a href="'+data.link+'">'+data.title+'</a></h4></dt>';
+                html+='<p style="font-size:14px;color:#848484">'+data.author+'</p>';
+              html+='<p style="font-size:14px;color:#848484">'+data.intro+'</p>';
+              html+='</dl></tr>'; 
+                 $("#datalist").append(html);
+              }
+              
+              $(window).scroll(function(){
+                  var wscroll=$(window).scrollTop();
+                  var wtop=$("#wrapper").offset().top;
+                  var dtop=$("#datalist").offset().top;
+                 // console.log(wscroll);
+                    if((wscroll+50)>=wtop){
+
+                    $("#wrapper").addClass('wrapperfix');
+                  }
+                    if(wscroll+50<dtop)
+                  {
+                    $("#wrapper").removeClass('wrapperfix');
+                  }
+                loaddata(id);
+              });
+            },'json');
+          }
+        }
+      } 
+      $(window).load(function(){
+/*
+        var wscroll=$(window).scrollTop();
+        var wtop=$("#wrapper").offset().top;
+        //console.log(wscroll);
+        //console.log(wtop);
+        if(wscroll>=wtop){
+
+          $("#wrapper").addClass('wrapperfix');
+        }else{
+          $("#wrapper").removeClass('wrapperfix');
+        }*/
+        loaddata({{categoryid}});
+      });
+    </script>
+    <script type="text/javascript">
+
+var myScroll;
+
+   myScroll = new IScroll('#wrapper', { scrollX: true, scrollY: false, mouseWheel: true });
+ 
+//document.addEventListener('touchmove', function (e) { e.preventDefault(); }, false);
+
+$("#catelist").find('li').bind('touchstart click',function(){
+  $("#catelist >li").removeClass('menu_active');
+  $(this).addClass('menu_active');
+  var li_id=$(this).attr('id');
+  var id=parseInt(li_id.substring(3));
+  page=1;
+  loaddata(id);
+})
+</script>   
+    {% endblock %}

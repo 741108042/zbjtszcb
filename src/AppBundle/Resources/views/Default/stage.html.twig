@@ -1,0 +1,21 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+<meta charset="utf-8">
+<title>抽奖</title>
+<link rel="stylesheet" href="{{ asset('/bundles/share/animate.min.css') }}">
+<style>
+* { margin: 0; padding: 0;}
+body { font: 14px "Microsoft Yahei"; overflow-x: hidden;}
+h1 { width: 900px; margin: 40px auto 100px; font: 32px "Microsoft Yahei"; text-align: center;}
+h2 { font: 96px "Microsoft Yahei"; font-weight: 500; text-align: center; color: #f35626;}
+.wrap  { margin-top: 100px; font: 30px "Microsoft Yahei"; text-align: center; color: #999;} 
+</style> 
+</head>
+
+<body>
+ <div class="wrap">
+     <h2 id="animate" class='{{result.class}}'>{{result.msg}}</h2>
+ </div>
+</body>
+</html>

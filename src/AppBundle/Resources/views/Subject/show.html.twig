@@ -1,0 +1,64 @@
+{% extends '::base.html.twig' %}
+
+{% block body -%}
+    <h1>Subject</h1>
+
+    <table class="record_properties">
+        <tbody>
+            <tr>
+                <th>Id</th>
+                <td>{{ entity.id }}</td>
+            </tr>
+            <tr>
+                <th>Topicid</th>
+                <td>{{ entity.topicId }}</td>
+            </tr>
+            <tr>
+                <th>Title</th>
+                <td>{{ entity.title }}</td>
+            </tr>
+            <tr>
+                <th>Source</th>
+                <td>{{ entity.source }}</td>
+            </tr>
+            <tr>
+                <th>Author</th>
+                <td>{{ entity.author }}</td>
+            </tr>
+            <tr>
+                <th>Picids</th>
+                <td>{{ entity.picids }}
+                {% for item in img_entities %}
+                <img src="{{item.image}}" width=100/>
+                {% endfor %}
+                </td>
+            </tr>
+            <tr>
+                <th>Intro</th>
+                <td>{{ entity.intro }}</td>
+            </tr>
+            <tr>
+                <th>Created</th>
+                <td>{{ entity.created }}</td>
+            </tr>
+            <tr>
+                <th>Istop</th>
+                <td>{{ entity.istop }}</td>
+            </tr>
+        </tbody>
+    </table>
+
+        <ul class="record_actions">
+    <li>
+        <a href="{{ path('topic_subject',{'topic_id':entity.topicId}) }}">
+            Back to the list
+        </a>
+    </li>
+    <li>
+        <a href="{{ path('topic_subject_edit', { 'id': entity.id }) }}">
+            Edit
+        </a>
+    </li>
+    <li>{{ form(delete_form) }}</li>
+</ul>
+{% endblock %}

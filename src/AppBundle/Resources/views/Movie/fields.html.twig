@@ -1,0 +1,16 @@
+{% block form_row %}
+{% spaceless %}
+
+<div class="form-group">
+				<label for="form-field-1" class="col-sm-3 control-label no-padding-right">       
+				 {{ form_label(form) }}
+ </label>
+
+				<div class="col-sm-9">
+					
+					        {{ form_widget(form) }}
+
+ 				</div>
+			</div> 
+{% endspaceless %}
+{% endblock form_row %}

@@ -1,0 +1,68 @@
+{% extends '::base.html.twig' %}
+
+{% block body -%}
+<div id="main-container" class="main-container">
+ <div class="main-content">
+    <div class="breadcrumbs">
+             <ul class="breadcrumb">
+                        <li>
+                            <i class="ace-icon fa fa-home home-icon"></i>
+                            <a href="#">书库</a>
+                        </li>
+                    <li class="active">
+                            
+                             Dashboard 
+                        </li></ul>
+
+        <!-- breadcrumbs goes here -->
+    </div>
+    <div class="page-content">
+        <div class="row">
+            <div class="col-xs-12">
+                <table id="sample-table-1" class="table table-striped table-bordered table-hover">
+        <thead>
+            <tr>
+                <th>Id</th>
+                <th>Title</th>
+                <th>Author</th>
+                <th>Cover</th>
+                <th>Video</th>
+                <th>Created</th>
+                <th>Actions</th>
+            </tr>
+        </thead>
+        <tbody>
+        {% for entity in entities %}
+            <tr>
+                <td><a href="{{ path('topic_show', { 'id': entity.id }) }}">{{ entity.id }}</a></td>
+                <td>{{ entity.title }}</td>
+                <td>{{ entity.author }}</td>
+                <td><img src="{{ entity.cover }}" width=100></td>
+                <td>{{ entity.video }}</td>
+                <td>{{ entity.created }}</td>
+                <td>
+                <ul>
+                    <li>
+                        <a href="{{ path('topic_show', { 'id': entity.id }) }}">show</a>
+                    </li>
+                    <li>
+                        <a href="{{ path('topic_edit', { 'id': entity.id }) }}">edit</a>
+                    </li>
+                     <li>
+                        <a href="{{ path('topic_subject', { 'topic_id': entity.id }) }}">动态管理</a>
+                    </li>
+                </ul>
+                </td>
+            </tr>
+        {% endfor %}
+        </tbody>
+    </table>
+</div></div></div></div></div>
+        <ul>
+        <li>
+            <a href="{{ path('topic_new') }}">
+                Create a new entry
+            </a>
+        </li>
+    </ul>
+    {% endblock %}

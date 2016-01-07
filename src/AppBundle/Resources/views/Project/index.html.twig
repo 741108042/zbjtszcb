@@ -1,0 +1,71 @@
+{% extends '::base.html.twig' %}
+
+{% block body -%}
+   
+<style>
+
+.glyphicon{font-size:20px;}
+</style>
+   <div id="main-container" class="main-container">
+ <div class="main-content">
+    <div class="breadcrumbs">
+             <ul class="breadcrumb">
+                        <li>
+                            <i class="ace-icon fa fa-home home-icon"></i>
+                            <a href="#">H5 SHOW</a>
+                        </li> </ul>
+
+        <!-- breadcrumbs goes here -->
+    </div>
+    <div class="page-content">
+        
+        <!-- setting box goes here if needed -->
+
+        <div class="row">
+            <div class="col-xs-12">
+<form action="{{ path('book_exam')}}" method="post" >
+                <table id="sample-table-1" class="table table-striped table-bordered table-hover">
+        <thead>
+            <tr>
+                <th>Id</th>
+
+                <th>项目名</th>
+                <th>状态</th>
+                <th>创建时间</th>
+                <th>操作</th>
+            </tr>
+        </thead>
+        <tbody>
+        {% for entity in entities %}
+            <tr>
+                <td>{{ entity.id }}</td>
+
+                <td><a href="{{ path('project_show', { 'id': entity.id }) }}">{{ entity.name }}</a></td>
+                <td>{{ entity.status }}</td>
+                <td>{{ entity.created |date("m/d/Y") }}</td>
+                <td>
+                <ul>
+                    <li>
+                        <a href="{{ path('page_list', { 'id': entity.id }) }}">添加页面</a>
+                    </li>
+                    <li>
+                        <a href="{{ path('project_show', { 'id': entity.id }) }}">show</a>
+                    </li>
+                    <li>
+                        <a href="{{ path('project_edit', { 'id': entity.id }) }}">edit</a>
+                    </li>
+                </ul>
+                </td>
+            </tr>
+        {% endfor %}
+        </tbody>
+    </table>
+
+        <ul>
+        <li>
+            <a href="{{ path('project_new') }}">
+                Create a new entry
+            </a>
+        </li>
+    </ul>
+    {% endblock %}

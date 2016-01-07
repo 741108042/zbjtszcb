@@ -1,0 +1,32 @@
+{% extends 'base.html.twig' %}
+
+{% block body %}  
+                 {{ include('AppBundle/views/default/navbar.html.twig') }}
+
+    <div class="main-container" id="main-container">
+                {{ include('AppBundle/views/default/sidebar.html.twig') }}
+
+        <div class="main-content"> 
+            <div class="page-content"  style="padding:0">
+            <iframe width=100% src="" id="contentframe"name="contentframe" frameborder="0" scrolling="yes" marginheight="0" marginwidth="0"  onLoad="iFrameHeight()"></iframe>
+             </div>
+            <!-- /.page-content -->
+        </div>
+        <!-- /.main-content -->
+        <!-- footer area -->
+    </div>
+    <script type="text/javascript" language="javascript">   
+         function iFrameHeight() {   
+             //
+             
+        var ifm= document.getElementById("contentframe");   
+        ifm.height =$(window).height()-100;
+         
+        }   
+    $(window).resize(iFrameHeight);
+
+  </script>
+ {% endblock %}
+
+{% block stylesheets %} 
+{% endblock %}

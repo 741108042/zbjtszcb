@@ -1,0 +1,156 @@
+{% extends '::base.html.twig' %}
+
+{% block body -%}
+<div id="main-container" class="main-container">
+ <div class="main-content">
+    <div class="breadcrumbs">
+             <ul class="breadcrumb">
+                        <li>
+                            <i class="ace-icon fa fa-home home-icon"></i>
+                            <a href="#">书库</a>
+                        </li>
+                    <li class="active">
+                            
+                             Dashboard 
+                        </li></ul>
+
+        <!-- breadcrumbs goes here -->
+    </div>
+    <div class="page-content">
+    <div class="page-header">
+        <h1>
+            {{ entity.title }}
+            <small>
+                <i class="ace-icon fa fa-angle-double-right"></i>
+            </small>
+        </h1>
+    </div>
+
+
+<!---->
+    <div class="row">
+        <div class="col-xs-12 col-sm-3 center">
+            <span class="profile-picture">
+                <img src="{{ entity.cover }}" id="avatar2" alt="Alex's Avatar" class="editable img-responsive">
+            </span>
+
+            <div class="space space-4"></div>
+            <form method="post" action="{{path('book_exam')}}" >
+                <input type="hidden" name="ids[]" value="{{ entity.id }}" />
+                            {% if entity.status==1 %}
+                 <input type="submit"name="status" class="btn btn-success"value="2审核通过" >
+                                  <input type="submit"class="btn btn-primary"name="status" value="3审核不通过" >
+
+                   {% elseif entity.status==2 %}
+                    <input type="submit"name="status" class="btn btn-primary" value="4下架" >
+                    <input type="submit"name="status" class="btn btn-dranger"value="5删除" >
+                    {% else %}
+                    <input type="submit"name="status" class="btn btn-primary"value="1待审核" >
+                    <input type="submit"name="status" class="btn btn-primary"value="2上架" >
+ 
+                 {% endif %}
+            </form> 
+ 
+
+        </div><!-- /.col -->
+
+        <div class="col-xs-12 col-sm-9">
+            <h4 class="blue">
+                <span class="middle">{{ entity.title }}</span>
+
+                <span class="label label-purple arrowed-in-right">
+                    <i class="ace-icon fa fa-circle smaller-80 align-middle"></i>
+                    online
+                </span>
+            </h4>
+
+            <div class="profile-user-info">
+                <div class="profile-info-row">
+                    <div class="profile-info-name"> 作者 </div>
+
+                    <div class="profile-info-value">
+                        <span>{{ entity.author }}</span>
+                    </div>
+                </div>
+ 
+                <div class="profile-info-row">
+                    <div class="profile-info-name"> 所属分类 </div>
+
+                    <div class="profile-info-value">
+                        <span>{{ entity.category }}</span>
+                    </div>
+                </div>
+                <div class="profile-info-row">
+                    <div class="profile-info-name"> 审核状态 </div>
+
+                    <div class="profile-info-value">
+                        <span>{{ entity.statusName }}</span>
+                    </div>
+                </div>
+                <div class="profile-info-row">
+                    <div class="profile-info-name"> 发布状态 </div>
+
+                    <div class="profile-info-value">
+                        <span>{{ entity.pubName }}</span>
+                    </div>
+                </div>
+                <div class="profile-info-row">
+                    <div class="profile-info-name"> 创建时间 </div>
+
+                    <div class="profile-info-value">
+                        <span>{{ entity.created|date("m/d/Y") }}</span>
+                    </div>
+                </div>
+
+                <div class="profile-info-row">
+                    <div class="profile-info-name"> 更新时间 </div>
+
+                    <div class="profile-info-value">
+                        <span>{{ entity.updated|date("m/d/Y") }}</span>
+                    </div>
+                </div>
+            </div>
+
+            <div class="hr hr-8 dotted"></div>
+
+        </div><!-- /.col -->
+    </div>
+    <!---->
+    <div class="row">
+        <div class="col-xs-12 col-sm-6">
+            <div class="widget-box transparent">
+                <div class="widget-header widget-header-small">
+                    <h4 class="widget-title smaller">
+                        <i class="ace-icon fa fa-check-square-o bigger-110"></i>
+                        介绍
+                    </h4>
+                </div>
+
+                <div class="widget-body">
+                    <div class="widget-main">
+                        {{entity.intro}}
+                    </div>
+                </div>
+            </div>
+        </div>
+
+     </div>
+
+</div>
+</div>
+</div>
+ 
+        <ul class="record_actions">
+    <li>
+        <a href="{{ path('book') }}">
+            Back to the list
+        </a>
+    </li>
+    <li>
+        <a href="{{ path('book_edit', { 'id': entity.id }) }}">
+            Edit
+        </a>
+    </li>
+    <li>{{ form(delete_form) }}</li>
+</ul>
+{% endblock %}

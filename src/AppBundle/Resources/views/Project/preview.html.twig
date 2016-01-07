@@ -1,0 +1,94 @@
+
+{% extends '::emptybase.html.twig' %}
+{% block jslib %}
+	<script src="{{ asset('bundles/swiper/js/swiper.min.js') }}"></script>
+    <script src="{{ asset('bundles/swiper/js/swiper.animate.min.js') }}"></script>
+{% endblock %}
+{% block csslib %}
+<link rel="stylesheet" href="{{ asset('bundles/swiper/css/swiper.min.css') }}">
+<link rel="stylesheet" href="{{ asset('bundles/swiper/css/animate.min.css') }}">
+{% endblock %}
+{% block body -%} 
+<style>
+body{
+	font-size:24px;
+	 color: #f35626;
+}
+.swiper-container {
+    width: 400px;
+    height: 600px;
+    background-color: #4390ee
+}  
+@keyframes ani-arrow {
+0% {
+    opacity: 0;
+    transform: translate(0px, 0px);
+}
+30% {
+    opacity: 1;
+    transform: translate(-20px, -20px);
+}
+100% {
+    opacity: 0;
+    transform: translate(-30px, -30px);
+}
+}
+.arrow-down p, .arrow-right p {
+    animation: 1.5s ease-in-out 0s normal none infinite running ani-arrow;
+    background-image: url("{{ asset('bundles/swiper/icon_arrow_1.png') }}");
+    background-position: center center;
+    background-repeat: no-repeat;
+    height: 96px;
+    left: 50%;
+    margin: -14px 0 0 -48px;
+    position: absolute;
+    top: 50%;
+    width: 96px;
+}
+.arrow-down, .arrow-right {
+    bottom: 0;
+    display: none;
+    height: 160px;
+    left: 50%;
+    pointer-events: none !important;
+    position: absolute;
+    transform: translate(-50%, 0px);
+    visibility: visible;
+    width: 160px;
+    z-index: 150;
+}
+</style>
+<div class="swiper-container">
+    <div class="swiper-wrapper">
+    	{% for page in entity %}
+    	        <div class="swiper-slide">
+    	        	<p>第 {{loop.index }}页</p>
+    	{% for item in page['items'] %}
+{% autoescape false %}
+
+    	        	{{ item }}
+    	        	{% endautoescape %}
+    	{% endfor %}
+				</div> 
+    	{% endfor %}
+    </div>    	<div class="arrow-down" style="display: block;"><p style=""></p></div>
+
+</div>
+ {% block javascripts %}
+<script>        
+  var mySwiper = new Swiper ('.swiper-container', {
+  	   direction: 'vertical',
+  	       nextButton: '.swiper-button-next',
+  onInit: function(swiper){ //Swiper2.x的初始化是onFirstInit
+    swiperAnimateCache(swiper); //隐藏动画元素 
+    swiperAnimate(swiper); //初始化完成开始动画
+  }, 
+  onSlideChangeEnd: function(swiper){ 
+    swiperAnimate(swiper); //每个slide切换结束时也运行当前slide动画
+  } 
+  })        
+  </script>
+          {% endblock %}
+
+{% endblock %}
+
