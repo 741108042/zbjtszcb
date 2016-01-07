@@ -37,7 +37,8 @@ class DefaultController extends Controller
         if(!$securityContext->isGranted('ROLE_ADMIN')){
             throw new AccessDeniedException('Only an admin can do this!!!!');
         }
-         return new Response('<html><body>Admin page!</body></html>');
+                    return $this->redirect($this->generateUrl('homepage'));
+
     }
     /**
     * @Route("/login_new")

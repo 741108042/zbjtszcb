@@ -26,11 +26,15 @@
 </div>
         <!-- setting box goes here if needed -->
         <div class="row">
-            <div class="col-xs-12">
+            <div class="col-xs-6">
             	{% form_theme edit_form 'AppBundle:Movie:fields.html.twig' %}
 {{ form_start(edit_form, {'attr':{'class': 'form-horizontal'}}) }}
 {{ form_widget(edit_form) }}
 {{ form_end(edit_form) }}
+
+            </div>
+            <div class="col-xs-6">
+                <img src="{{edit_form.cover.vars.value}}"style="max-height:200px;" />
 
             </div>
         </div>

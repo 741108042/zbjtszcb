@@ -7,11 +7,11 @@
              <ul class="breadcrumb">
                         <li>
                             <i class="ace-icon fa fa-home home-icon"></i>
-                            <a href="#">书库</a>
+                            <a href="#">直播管理</a>
                         </li>
                     <li class="active">
                             
-                             Dashboard 
+                             直播列表 
                         </li></ul>
 
         <!-- breadcrumbs goes here -->
@@ -23,12 +23,12 @@
         <thead>
             <tr>
                 <th>Id</th>
-                <th>Title</th>
-                <th>Author</th>
-                <th>Cover</th>
-                <th>Video</th>
-                <th>Created</th>
-                <th>Actions</th>
+                <th>主题</th>
+                <th>编辑</th>
+                <th>封面</th>
+                <th>发布地址</th>
+                <th>发布时间</th>
+                <th>操作</th>
             </tr>
         </thead>
         <tbody>
@@ -38,15 +38,15 @@
                 <td>{{ entity.title }}</td>
                 <td>{{ entity.author }}</td>
                 <td><img src="{{ entity.cover }}" width=100></td>
-                <td>{{ entity.video }}</td>
-                <td>{{ entity.created }}</td>
+                <td><a href="{{ url('topic_view',{'id':entity.id} ) }}" target="_blank" >{{ url('topic_view',{'id':entity.id} ) }}</a></td>
+                <td>{{ entity.created|date("Y-m-d H:i:s") }}</td>
                 <td>
                 <ul>
                     <li>
-                        <a href="{{ path('topic_show', { 'id': entity.id }) }}">show</a>
+                        <a href="{{ path('topic_show', { 'id': entity.id }) }}">预览</a>
                     </li>
                     <li>
-                        <a href="{{ path('topic_edit', { 'id': entity.id }) }}">edit</a>
+                        <a href="{{ path('topic_edit', { 'id': entity.id }) }}">编辑</a>
                     </li>
                      <li>
                         <a href="{{ path('topic_subject', { 'topic_id': entity.id }) }}">动态管理</a>

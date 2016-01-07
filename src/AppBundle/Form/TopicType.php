@@ -17,8 +17,10 @@ class TopicType extends AbstractType
         $builder
             ->add('title','text',array('label'=>'直播标题'))
             ->add('author','text',array('label'=>'直播作者'))
-            ->add('coverfile','file',array('label'=>'直播头图'))
-            ->add('video','text',array('label'=>'直播视频'))
+            ->add('coverfile','file',array('label'=>'直播头图','required'=>false))
+            ->add('cover','hidden')
+            ->add('updated','hidden',array('required'=>false))
+            ->add('video','text',array('label'=>'直播视频','required'=>false))
         ;
     }
     

@@ -278,7 +278,7 @@ class TopicController extends Controller
         $em = $this->getDoctrine()->getManager();
 
         $entity = $em->getRepository('AppBundle:Topic')->find($id);
-
+        $entity->setUpdated(time());
         if (!$entity) {
             throw $this->createNotFoundException('Unable to find Topic entity.');
         }

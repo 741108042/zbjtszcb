@@ -59,7 +59,12 @@ class Topic
      * @ORM\Column(name="created", type="integer")
      */
     private $created;
-
+    /**
+     * @var integer
+     *
+     * @ORM\Column(name="updated", type="integer")
+     */
+    private $updated;
     /**
      * @Assert\File(maxSize="6000000")
      */
@@ -185,6 +190,29 @@ class Topic
     public function setCreated($created)
     {
         $this->created = $created;
+
+        return $this;
+    }
+
+    /**
+     * Get updated
+     *
+     * @return integer
+     */
+    public function getUpdated()
+    {
+        return $this->updated;
+    }
+     /**
+     * Set created
+     *
+     * @param integer $updated
+     *
+     * @return Topic
+     */
+    public function setUpdated($updated)
+    {
+        $this->updated = $updated;
 
         return $this;
     }
