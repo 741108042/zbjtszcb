@@ -257,7 +257,6 @@ class SubjectController extends Controller
      *
      * @Route("/{id}", name="topic_subject_update")
      * @Method("PUT")
-     * @Template("AppBundle:Subject:edit.html.twig")
      */
     public function updateAction(Request $request, $id)
     {
@@ -277,13 +276,16 @@ class SubjectController extends Controller
             $em->flush();
 
             return $this->redirect($this->generateUrl('topic_subject', array('topic_id' => $entity->getTopicid())));
-        }
+        }else{
+            return $this->redirect($this->generateUrl('topic_subject_edit', array('id' => $id)));
 
+        }
+/*
         return array(
             'entity'      => $entity,
             'edit_form'   => $editForm->createView(),
             'delete_form' => $deleteForm->createView(),
-        );
+        );*/
     }
     /**
      * Deletes a Subject entity.

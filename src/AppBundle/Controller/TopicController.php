@@ -93,6 +93,7 @@ class TopicController extends Controller
     public function newAction()
     {
         $entity = new Topic();
+        $entity->setUpdated(time());
         $form   = $this->createCreateForm($entity);
 
         return array(

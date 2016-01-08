@@ -30,7 +30,8 @@ class TopicType extends AbstractType
     public function setDefaultOptions(OptionsResolverInterface $resolver)
     {
         $resolver->setDefaults(array(
-            'data_class' => 'AppBundle\Entity\Topic'
+            'data_class' => 'AppBundle\Entity\Topic',
+            'csrf_protection' => false
         ));
     }
 
